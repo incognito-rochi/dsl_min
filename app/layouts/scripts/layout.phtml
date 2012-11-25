@@ -1,0 +1,117 @@
+<?php
+/**
+ * @category   DSL
+ * @package    Controllers
+ * @copyright  2011-2012 Design Source LAB
+ * @version    $Id: layout.phtml 001 2012-10-25 $
+ */
+
+echo $this->doctype()
+?> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+     <link href="<?php echo $this->baseUrl() ?>/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+     <?php 
+	# Title
+	echo $this->headTitle(); 
+        
+	# Meta data
+	echo $this->headMeta()
+                            ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                            ->appendHttpEquiv('Content-Language', 'en-US');
+                            
+                            
+        
+	# CSS
+	echo $this->headLink()
+                            ->appendStylesheet($this->baseUrl() . '/public/css/layout.css')
+                            ->appendStylesheet($this->baseUrl() . '/public/css/MenuMatic.css')
+                            ->appendStylesheet($this->baseUrl() . '/public/css/according.css')
+                            ->appendStylesheet($this->baseUrl() . '/public/css/js-image-slider.css')
+                            ->appendStylesheet($this->baseUrl() . '/public/css/common.css');
+                           
+	# Javascript
+	echo $this->headScript()
+                                    ->appendFile($this->baseUrl() . '/public/js/js-image-slider.js', 'text/javascript')
+                                    ->appendFile($this->baseUrl() . '/public/js/according.js', 'text/javascript')
+                                    ->appendFile($this->baseUrl() . '/public/js/MenuMatic.js', 'text/javascript');
+        ?>    
+    </head>
+    <body onload="new Accordian('basic-accordian',5,'header_highlight');">
+	<div id="warper">
+    	<div id="header">
+        <div id="logo">
+            <img src="<?php echo $this->baseUrl() ?>/public/img/favicon.jpg" />
+            </div>
+            <div id="slogan">
+            <span>This is ..</span>
+            <hr />
+            </div>
+        </div>
+ 
+        <div id="slide">
+         <div id="sliderFrame">
+        <div id="ribbon"></div>
+        <div id="slider">
+            <img src="<?php echo $this->baseUrl() ?>/public/img/slide1.jpg" alt="Chand" />
+            <img src="<?php echo $this->baseUrl() ?>/public/img/slide2.jpg" alt="Suruj" />
+            <img src="<?php echo $this->baseUrl() ?>/public/img/slide3.jpg" alt="Pure Javascript. No jQuery. No flash." />
+            <img src="<?php echo $this->baseUrl() ?>/public/img/slide4.jpg" alt="#htmlcaption" />
+            <img src="<?php echo $this->baseUrl() ?>/public/img/slide5.jpg" alt="Creative" />
+        </div>
+        <div id="htmlcaption" style="display: none;">
+            <em>HTML</em> caption. Link to <a href="http://www.google.com/">Google</a>.
+        </div>
+    </div>
+    </div>
+     	<!-- /.slider -->
+      <div id='navigation'>    
+           <ul id='nav'> 
+            <?php 
+            echo '<li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'index'), null, true) . '">Home</a></li>'; 
+           
+            echo '<li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'service'), null, true) . '">Services</a>';
+              
+            echo '<ul><li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'design'), null, true) . '">Design</a></li>';
+                    
+            echo '<li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'automation'), null, true) . '">Automation</a></li></ul></li>';
+                
+           
+            echo '<li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'projects'), null, true) . '">Projects</a></li>';
+           
+            echo '<li><a href="' . $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'aboutus'), null, true) . '">About Us</a></li>';
+            ?>
+         
+            <?php
+                if (Zend_Auth::getInstance()->hasIdentity()) {
+                    echo '<li class="details">Welcome ' . Zend_Auth::getInstance()->getIdentity()->getName() . ' </li>';
+                    echo '<li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'account', 'action' => 'event'), null, true) . '">History</a></li>';
+                    echo '<li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'password', 'action' => 'update'), null, true) . '">Update Password</a></li>';
+                    echo '<li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'logout', 'action' => 'index'), null, true) . '">Logout</a></li>';
+                }
+                else {
+                echo '<li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'login', 'action' => 'index'), null, true) . '">Login</a>'; 
+                echo '<ul><li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'password', 'action' => 'forgot'), null, true) . '">Forgot password</a></li>'; 
+                echo '<li><a href="' . $this->url(array('module' => 'auth', 'controller' => 'register', 'action' => 'index'), null, true) . '">Register</a></li></ul></li>'; 
+                }
+               ?>
+         <ul>       
+                
+</div>
+        <div id="content">
+        <div id="context">
+          <?php echo !empty($this->alert) ? '<div class="error">' . implode('<br />', $this->alert) .'</div>' : null; ?>
+          <?php echo $this->layout()->content; ?>
+                    
+        </div>
+            
+        </div>
+        <div id="footer">
+            <div id="fdiv">
+            <span>powered by <a href="http://rochi.netii.net">rochi</a>&copy; 2012 - Design Source LAB</span>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
